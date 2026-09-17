@@ -216,6 +216,10 @@ namespace dsp56k
 				if(any(written, RegisterMask::LA | RegisterMask::LC))
 				{
 					terminationReason = JitBlockInfo::TerminationReason::WriteLoopRegs;
+					// a DO sets LA to the end it was registered with, only other writes can move a running loop
+					TWord doEnd;
+					if(!getLoopEndAddr(doEnd, instA, pc, opB))
+						_info.addFlag(JitBlockInfo::Flags::WritesLoopRegsDirectly);
 					break;
 				}
 

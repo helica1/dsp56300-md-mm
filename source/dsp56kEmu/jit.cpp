@@ -375,7 +375,7 @@ namespace dsp56k
 			return &funcRunCheckPMemWrite;
 		}
 
-		if(i.terminationReason == JitBlockInfo::TerminationReason::WriteLoopRegs)
+		if(i.terminationReason == JitBlockInfo::TerminationReason::WriteLoopRegs && i.hasFlag(JitBlockInfo::Flags::WritesLoopRegsDirectly))
 			return &funcRunCheckLoopRegs;
 
 		if(i.hasFlag(JitBlockInfo::Flags::ModeChange))
